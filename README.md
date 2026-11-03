@@ -11,7 +11,7 @@ and visual design, with the contact form now backed by a real API instead of a `
 | Area     | Choice                                                                                           |
 | -------- | ------------------------------------------------------------------------------------------------ |
 | Web      | Next.js 16 (App Router, Server Actions), React 19, Tailwind CSS 4                                |
-| API      | NestJS 12 (ESM), Drizzle ORM, PostgreSQL 18, Zod validation, Swagger                             |
+| API      | NestJS 12 (ESM), Drizzle ORM, PostgreSQL 18, Zod validation, OpenAPI docs with Scalar            |
 | Shared   | `@glitch-craft/contracts`: Zod schemas and types used by both apps                               |
 | Tooling  | bun 1.2 (package manager, workspaces, catalogs), Turborepo 2, TypeScript 6, ESLint 9, Prettier 3 |
 | Testing  | Vitest 5, Testing Library, Supertest                                                             |
@@ -70,11 +70,11 @@ bun run db:migrate   # apply the SQL migrations
 bun run dev          # web, API and contracts in watch mode
 ```
 
-| URL                                    | What                        |
-| -------------------------------------- | --------------------------- |
-| http://localhost:4710                  | Website                     |
-| http://localhost:4711/api/docs         | Swagger UI (non-production) |
-| http://localhost:4711/api/health/ready | Readiness check             |
+| URL                                    | What                                   |
+| -------------------------------------- | -------------------------------------- |
+| http://localhost:4710                  | Website                                |
+| http://localhost:4711/api/docs         | API reference, Scalar (non-production) |
+| http://localhost:4711/api/health/ready | Readiness check                        |
 
 ## Scripts
 
@@ -127,6 +127,10 @@ Browser ──form post──▶ Next.js Server Action ──JSON──▶ NestJ
 
 Every route is rate-limited to 120 requests per minute per client by default.
 
+Outside production, an interactive API reference built with [Scalar](https://scalar.com) is
+served at `/api/docs`, and the raw OpenAPI spec at `/api/docs/openapi.json`. `@nestjs/swagger`
+generates the spec from the controllers and the shared Zod schemas.
+
 ## Environment variables
 
 **`apps/web`**
@@ -138,14 +142,14 @@ Every route is rate-limited to 120 requests per minute per client by default.
 
 **`apps/api`** (validated at startup by `src/config/env.ts`)
 
-| Variable       | Default                            | Notes                                                      |
-| -------------- | ---------------------------------- | ---------------------------------------------------------- |
-| `DATABASE_URL` | none (required)                    | `postgres://` connection string                            |
-| `PORT`         | `4711`                             |                                                            |
-| `HOST`         | `0.0.0.0`                          |                                                            |
-| `NODE_ENV`     | `development`                      | `production` switches to JSON logs and disables Swagger    |
-| `CORS_ORIGINS` | `http://localhost:4710`            | Comma-separated                                            |
-| `TRUST_PROXY`  | `loopback, linklocal, uniquelocal` | Express `trust proxy`: true/false, a hop count, or subnets |
+| Variable       | Default                            | Notes                                                        |
+| -------------- | ---------------------------------- | ------------------------------------------------------------ |
+| `DATABASE_URL` | none (required)                    | `postgres://` connection string                              |
+| `PORT`         | `4711`                             |                                                              |
+| `HOST`         | `0.0.0.0`                          |                                                              |
+| `NODE_ENV`     | `development`                      | `production` switches to JSON logs and disables the API docs |
+| `CORS_ORIGINS` | `http://localhost:4710`            | Comma-separated                                              |
+| `TRUST_PROXY`  | `loopback, linklocal, uniquelocal` | Express `trust proxy`: true/false, a hop count, or subnets   |
 
 Rate limiting relies on the client IP. In production, run the site behind a proxy or CDN that sets
 `X-Forwarded-For`, and set `TRUST_PROXY` to match your network.
@@ -176,7 +180,7 @@ needed in production.
 - **Dependency install scripts are opt-in.** Bun runs install scripts only for packages on its
   built-in trusted list. `bun pm untrusted` lists the ones it blocked. Review a script before
   adding its package to `trustedDependencies` in the root `package.json`. Scarf telemetry
-  (pulled in by Swagger UI) is switched off with `scarfSettings`.
+  (pulled in by @nestjs/swagger's bundled Swagger UI) is switched off with `scarfSettings`.
 - **In-page links use `SectionLink`**, a plain anchor to `/#section`. It keeps native smooth
   scrolling, which `next/link` turns off during navigation. Use `next/link` for links between
   routes.
