@@ -1,0 +1,44 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "globalPassThroughEnv": [
+    "API_URL",
+    "CORS_ORIGINS",
+    "DATABASE_URL",
+    "HOST",
+    "PORT",
+    "TRUST_PROXY"
+  ],
+  "tasks": {
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": ["NEXT_OUTPUT"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["transit", "^build"]
+    },
+    "typecheck": {
+      "dependsOn": ["transit", "^build"]
+    },
+    "test": {
+      "dependsOn": ["transit", "^build"],
+      "outputs": []
+    },
+    "test:e2e": {
+      "dependsOn": ["transit", "^build"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

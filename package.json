@@ -1,0 +1,57 @@
+{
+  "name": "glitch-craft-portfolio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Glitch Craft® agency portfolio — Next.js web app and NestJS API in a Turborepo monorepo.",
+  "type": "module",
+  "packageManager": "bun@1.2.21",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "@types/node": "^22.20.5",
+      "@vitest/coverage-v8": "^5.1.0",
+      "eslint": "^9.39.5",
+      "prettier": "^3.9.10",
+      "turbo": "^2.11.10",
+      "typescript": "~6.0.3",
+      "vitest": "^5.1.0",
+      "zod": "^4.6.7"
+    }
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "turbo run clean",
+    "db:up": "docker compose up --detach --wait db",
+    "db:down": "docker compose down",
+    "db:generate": "bun run --cwd apps/api db:generate",
+    "db:migrate": "bun run --cwd apps/api db:migrate",
+    "db:studio": "bun run --cwd apps/api db:studio",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:"
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write"
+  },
+  "scarfSettings": {
+    "enabled": false
+  }
+}

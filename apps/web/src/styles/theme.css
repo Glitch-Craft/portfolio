@@ -1,0 +1,15 @@
+/*
+ * Design tokens, exposed as Tailwind theme variables (bg-navy, text-coral,
+ * font-display, ...) and usable in plain CSS as var(--color-coral) etc.
+ */
+@theme {
+  --color-navy: #0f1923;
+  --color-coral: #ff4655;
+  --color-paper: #ece8e1;
+  --color-teal: #11b5e4;
+
+  /* The --font-* sources are set on <html> by next/font (src/lib/fonts.ts). */
+  --font-sans: var(--font-dm-sans), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-display: var(--font-barlow-condensed), sans-serif;
+}

@@ -1,0 +1,10 @@
+# Normalise line endings in the repository.
+* text=auto eol=lf
+
+# Binary assets
+*.woff2 binary
+*.woff binary
+*.ttf binary
+*.png binary
+*.jpg binary
+*.ico binary

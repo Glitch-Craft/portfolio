@@ -1,0 +1,184 @@
+/* Hero visual: the levitating crystal and its HUD frame. */
+
+.artifact-panel {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  position: relative;
+}
+
+.artifact-top,
+.artifact-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #687f8a;
+  font-size: 8px;
+  padding: 0 10px;
+}
+
+.artifact-top {
+  margin: 2px 0 15px;
+}
+
+.artifact-top > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.artifact-top i {
+  height: 4px;
+  width: 4px;
+  background: #35d8cc;
+  box-shadow: 0 0 6px #35d8cc;
+}
+
+.artifact-frame {
+  position: relative;
+  flex: 1;
+  min-height: 420px;
+}
+
+.artifact-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#6594a009 1px, transparent 1px),
+    linear-gradient(90deg, #6594a009 1px, transparent 1px);
+  background-size: 43px 43px;
+  mask-image: radial-gradient(ellipse, black 30%, transparent 72%);
+}
+
+.corner {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  border-color: #54707c;
+  border-style: solid;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+  border-width: 1px 1px 0 0;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1px 1px;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1px 1px 0;
+}
+
+.artifact-svg {
+  position: absolute;
+  width: 116%;
+  height: 108%;
+  top: -7%;
+  left: -8%;
+  overflow: visible;
+}
+
+.crystal {
+  animation: levitate 7s ease-in-out infinite;
+  transform-origin: 300px 265px;
+}
+
+@keyframes levitate {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+}
+
+.artifact-axis {
+  position: absolute;
+  font-family: monospace;
+  font-size: 9px;
+  color: #647b85;
+}
+
+.axis-x {
+  right: 9px;
+  top: 49%;
+}
+
+.axis-y {
+  left: 50%;
+  top: 8px;
+}
+
+.artifact-readout {
+  position: absolute;
+  bottom: 19px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: #617a83;
+  font-size: 8px;
+  line-height: 1.8;
+}
+
+.readout-bars {
+  color: #2e797d;
+  font-size: 17px;
+}
+
+.artifact-bottom {
+  padding-top: 16px;
+}
+
+@media (min-width: 1500px) {
+  .artifact-frame {
+    min-height: 510px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .artifact-frame {
+    min-height: 380px;
+  }
+
+  .artifact-bottom {
+    font-size: 6px;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 700px) {
+  .artifact-panel {
+    margin-top: 47px;
+  }
+
+  .artifact-frame {
+    min-height: 355px;
+  }
+
+  .artifact-svg {
+    height: 111%;
+    top: -7%;
+  }
+
+  .artifact-bottom {
+    font-size: 7px;
+  }
+}

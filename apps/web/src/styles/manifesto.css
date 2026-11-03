@@ -1,0 +1,329 @@
+/* Manifesto (light section) and the capability cards. */
+
+.manifesto {
+  background: var(--color-paper);
+  color: var(--color-navy);
+  padding-top: 49px;
+  padding-bottom: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.manifesto::before {
+  content: '';
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: -120px;
+  right: -70px;
+  background-image: radial-gradient(#0f192328 1px, transparent 1px);
+  background-size: 5px 5px;
+  transform: rotate(-20deg);
+  mask-image: radial-gradient(ellipse, black, transparent 70%);
+  pointer-events: none;
+}
+
+.manifesto-intro {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  padding-top: 37px;
+}
+
+.manifesto-description {
+  max-width: 430px;
+  padding-top: 4px;
+}
+
+.manifesto-description p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: #586064;
+}
+
+.manifesto-description p + p {
+  margin-top: 14px;
+}
+
+.manifesto-description > span {
+  display: block;
+  margin-top: 20px;
+  font-size: 8px;
+  color: #29343d;
+}
+
+.manifesto-description > span .coral {
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+.capabilities-heading {
+  margin-top: 53px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #737979;
+  padding-bottom: 15px;
+}
+
+.capabilities-heading > span:first-child {
+  color: #26313a;
+}
+
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 19px;
+  padding-bottom: 37px;
+}
+
+.capability-card {
+  background: #e2dfd8;
+  border-top: 2px solid #26313a;
+  padding: 22px 25px 0;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 21px), calc(100% - 21px) 100%, 0 100%);
+  transition:
+    transform 0.25s,
+    background 0.25s;
+}
+
+.capability-card:hover {
+  transform: translateY(-5px);
+  background: #dad8d1;
+}
+
+.card-02 {
+  margin-top: 17px;
+  margin-bottom: -17px;
+}
+
+.card-03 {
+  border-top-color: var(--color-coral);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  min-height: 80px;
+}
+
+.card-top > .mono {
+  color: #777e7e;
+  font-size: 10px;
+}
+
+.card-top > svg:nth-child(2) {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  height: 45px;
+  width: 45px;
+}
+
+.card-top > svg:last-child {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 42px;
+  color: #8b8e89;
+}
+
+.capability-card h3 {
+  font-size: clamp(24px, 2.55vw, 39px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.capability-card p {
+  font-size: 12px;
+  line-height: 1.85;
+  color: #62686a;
+  margin-top: 17px;
+  min-height: 85px;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 55px;
+  border-top: 1px solid #c9cbc6;
+  margin-top: 21px;
+  font-size: 7px;
+  letter-spacing: 0.035em;
+  color: #576165;
+}
+
+.card-bottom svg {
+  width: 15px;
+  color: var(--color-navy);
+  flex-shrink: 0;
+}
+
+.manifesto-bottom {
+  border-top: 1px solid #cacbc5;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #6b7272;
+}
+
+.manifesto-bottom > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.manifesto-bottom .status-dot {
+  background: var(--color-coral);
+  box-shadow: none;
+  width: 4px;
+  height: 4px;
+}
+
+.manifesto-bottom svg {
+  margin-left: 12px;
+  color: #818986;
+  width: 13px;
+}
+
+@media (min-width: 1500px) {
+  .manifesto {
+    padding-top: 60px;
+  }
+
+  .manifesto-intro {
+    padding-top: 46px;
+  }
+
+  .manifesto-description p {
+    font-size: 15px;
+  }
+
+  .capability-card {
+    padding: 28px 30px 0;
+  }
+
+  .capability-card p {
+    font-size: 14px;
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .manifesto-intro {
+    gap: 35px;
+  }
+
+  .capability-card {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .capability-card p {
+    min-height: 109px;
+    font-size: 11px;
+  }
+
+  .card-bottom {
+    font-size: 6px;
+  }
+}
+
+@media (max-width: 700px) {
+  .manifesto {
+    padding-top: 33px;
+  }
+
+  .manifesto-intro {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-top: 29px;
+  }
+
+  .manifesto-description {
+    max-width: none;
+  }
+
+  .manifesto-description p {
+    font-size: 13px;
+  }
+
+  .manifesto-description > span {
+    margin-top: 16px;
+    font-size: 7px;
+  }
+
+  .capabilities-heading {
+    margin-top: 34px;
+    font-size: 7px;
+  }
+
+  .capabilities-heading > span:last-child {
+    display: none;
+  }
+
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    padding-bottom: 29px;
+  }
+
+  .capability-card {
+    padding: 22px 24px 0;
+  }
+
+  .card-02 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .card-top {
+    min-height: 58px;
+  }
+
+  .card-top > svg:nth-child(2) {
+    width: 45px;
+    height: 45px;
+    right: 0;
+    top: 1px;
+  }
+
+  .capability-card h3 {
+    font-size: 34px;
+  }
+
+  .capability-card p {
+    font-size: 12px;
+    max-width: 90%;
+    min-height: 0;
+    margin-top: 15px;
+  }
+
+  .card-bottom {
+    margin-top: 21px;
+    font-size: 7px;
+  }
+
+  .manifesto-bottom {
+    font-size: 6px;
+    gap: 15px;
+  }
+
+  .manifesto-bottom > span:last-child {
+    max-width: 130px;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .manifesto-bottom svg {
+    display: none;
+  }
+}

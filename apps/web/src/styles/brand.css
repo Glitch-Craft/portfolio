@@ -1,0 +1,44 @@
+/* GLITCH CRAFT® wordmark (header and footer). */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-paper);
+}
+
+.brand > span {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: 0.045em;
+}
+
+.brand > svg {
+  color: var(--color-coral);
+}
+
+.brand-second {
+  display: block;
+  margin-top: 3px;
+  position: relative;
+}
+
+.brand-dot {
+  font-family: sans-serif;
+  font-size: 9px;
+  position: absolute;
+  top: 0;
+  right: -12px;
+}
+
+@media (max-width: 700px) {
+  .brand > span {
+    font-size: 21px;
+  }
+
+  .brand > svg {
+    width: 28px;
+  }
+}

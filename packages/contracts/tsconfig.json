@@ -1,0 +1,8 @@
+{
+  "extends": "@glitch-craft/typescript-config/library.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,22 @@
+/*
+ * Global stylesheet entry point.
+ *
+ * Order matters: many rules share the same specificity, so a later file wins over
+ * an earlier one. Keep shared primitives before section styles, and put
+ * responsive overrides at the end of the file that owns the base rule.
+ */
+@import 'tailwindcss';
+
+@import '../styles/theme.css';
+@import '../styles/base.css';
+@import '../styles/primitives.css';
+
+@import '../styles/brand.css';
+@import '../styles/header.css';
+@import '../styles/hero.css';
+@import '../styles/artifact.css';
+@import '../styles/ticker.css';
+@import '../styles/manifesto.css';
+@import '../styles/contact.css';
+@import '../styles/footer.css';
+@import '../styles/not-found.css';

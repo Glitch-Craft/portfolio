@@ -1,0 +1,136 @@
+/* Shared typography helpers and building blocks used by several sections. */
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.065em;
+}
+
+.coral {
+  color: var(--color-coral);
+}
+
+.teal {
+  color: var(--color-teal);
+}
+
+.section-pad {
+  padding-left: max(6.2vw, calc((100vw - 1400px) / 2));
+  padding-right: max(6.2vw, calc((100vw - 1400px) / 2));
+}
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--color-teal);
+  display: inline-block;
+  box-shadow: 0 0 9px #11b5e444;
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  color: #acb3b8;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Angled call-to-action button. */
+.tactical-button {
+  min-height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  padding: 0 24px;
+  color: #f8f5f0;
+  background: var(--color-coral);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  transition:
+    background 0.2s,
+    filter 0.2s;
+}
+
+.tactical-button:hover {
+  background: #ef3447;
+  filter: drop-shadow(0 0 7px var(--color-teal));
+}
+
+/* "// SECTION_NAME ... [ TAG ]" strip at the top of a section. */
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #737473;
+  font-size: 9px;
+}
+
+.section-label > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #26313a;
+}
+
+.amber-line,
+.teal-line {
+  width: 23px;
+  height: 3px;
+  background: #f5a623;
+  display: inline-block;
+}
+
+.teal-line {
+  background: var(--color-teal);
+}
+
+h2 {
+  font-size: clamp(45px, 4.85vw, 74px);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+}
+
+@media (min-width: 1500px) {
+  .section-label {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .section-pad {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .eyebrow {
+    font-size: 8px;
+  }
+
+  .section-label {
+    font-size: 7px;
+  }
+
+  .section-label > span:last-child {
+    font-size: 6px;
+  }
+
+  .section-label > span:first-child {
+    gap: 7px;
+  }
+
+  .amber-line,
+  .teal-line {
+    width: 14px;
+    height: 2px;
+  }
+
+  h2 {
+    font-size: clamp(47px, 11vw, 65px);
+  }
+}

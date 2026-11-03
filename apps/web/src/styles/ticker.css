@@ -1,0 +1,42 @@
+/* Coral marquee strip between the hero and the manifesto. */
+
+.ticker {
+  background: var(--color-coral);
+  color: var(--color-navy);
+  overflow: hidden;
+  padding: 12px 0;
+  border-top: 1px solid #ff7380;
+}
+
+.ticker > div {
+  display: flex;
+  gap: 41px;
+  white-space: nowrap;
+  align-items: center;
+  width: max-content;
+  transform: translateX(-14px);
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.ticker span {
+  font-size: 24px;
+  line-height: 1;
+}
+
+@media (max-width: 700px) {
+  .ticker {
+    padding: 10px 0;
+  }
+
+  .ticker > div {
+    font-size: 18px;
+    gap: 25px;
+  }
+
+  .ticker span {
+    font-size: 21px;
+  }
+}

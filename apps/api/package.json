@@ -1,0 +1,62 @@
+{
+  "name": "@glitch-craft/api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Glitch Craft API — NestJS service that backs the portfolio site.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "files": [
+    "dist",
+    "drizzle"
+  ],
+  "scripts": {
+    "build": "nest build",
+    "dev": "nest start --watch",
+    "start": "node --enable-source-maps dist/main.js",
+    "start:debug": "nest start --debug --watch",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "test:e2e": "vitest run --config vitest.config.e2e.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:migrate:deploy": "node dist/database/migrate.js",
+    "db:studio": "drizzle-kit studio",
+    "clean": "rm -rf dist coverage .turbo"
+  },
+  "dependencies": {
+    "@glitch-craft/contracts": "workspace:*",
+    "@nestjs/common": "^12.3.2",
+    "@nestjs/config": "^12.0.1",
+    "@nestjs/core": "^12.3.2",
+    "@nestjs/platform-express": "^12.3.2",
+    "@nestjs/swagger": "^12.1.0",
+    "@nestjs/terminus": "^12.1.0",
+    "@nestjs/throttler": "^6.7.1",
+    "drizzle-orm": "^0.45.4",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@glitch-craft/eslint-config": "workspace:*",
+    "@glitch-craft/typescript-config": "workspace:*",
+    "@nestjs/cli": "^12.0.11",
+    "@nestjs/schematics": "^12.0.0",
+    "@nestjs/testing": "^12.3.2",
+    "@types/express": "^5.0.6",
+    "@types/node": "catalog:",
+    "@types/pg": "^8.23.1",
+    "@types/supertest": "^7.2.1",
+    "@vitest/coverage-v8": "catalog:",
+    "drizzle-kit": "^0.31.11",
+    "eslint": "catalog:",
+    "supertest": "^7.3.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

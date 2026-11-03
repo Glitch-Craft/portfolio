@@ -1,0 +1,66 @@
+/* Site footer. */
+
+/* Must stay above `.site-footer > a:last-child`: that rule wins at equal specificity. */
+.site-footer a:hover {
+  color: var(--color-coral);
+}
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 103px;
+  background: #0b141d;
+  border-top: 1px solid #27343c;
+}
+
+.site-footer .brand > svg {
+  width: 24px;
+  height: 29px;
+}
+
+.site-footer .brand > span {
+  font-size: 18px;
+}
+
+.site-footer .brand-dot {
+  font-size: 7px;
+  right: -10px;
+}
+
+.site-footer > span {
+  font-size: 7px;
+  color: #6e7d88;
+}
+
+.site-footer > a:last-child {
+  font-size: 8px;
+  color: #9ba7af;
+}
+
+.site-footer > a:last-child span {
+  color: var(--color-coral);
+  font-size: 17px;
+  margin-left: 12px;
+}
+
+@media (max-width: 700px) {
+  .site-footer {
+    flex-wrap: wrap;
+    padding-top: 26px;
+    padding-bottom: 24px;
+    gap: 23px 15px;
+  }
+
+  .site-footer > span {
+    order: 3;
+    width: 100%;
+    font-size: 6px;
+  }
+
+  .site-footer > a:last-child {
+    margin-left: auto;
+    font-size: 7px;
+  }
+}
