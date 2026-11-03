@@ -7,6 +7,11 @@ import { serverEnv } from '@/lib/server-env';
 
 const DEFAULT_TIMEOUT_MS = 8_000;
 
+/** Whether an API is configured for this deployment (see `API_URL`). */
+export function isApiConfigured(): boolean {
+  return serverEnv.API_URL !== undefined;
+}
+
 /** The API answered with a non-2xx status. */
 export class ApiRequestError extends Error {
   constructor(
@@ -41,6 +46,10 @@ export async function apiRequest<TSchema extends z.ZodType>(
     timeoutMs = DEFAULT_TIMEOUT_MS,
   }: ApiRequestOptions<TSchema>,
 ): Promise<z.output<TSchema>> {
+  if (!serverEnv.API_URL) {
+    throw new Error('API_URL is not configured; check isApiConfigured() first.');
+  }
+
   const response = await fetch(new URL(path, serverEnv.API_URL), {
     method,
     headers: {

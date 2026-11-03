@@ -6,6 +6,7 @@
     "CORS_ORIGINS",
     "DATABASE_URL",
     "HOST",
+    "NODE_ENV",
     "PORT",
     "TRUST_PROXY"
   ],
@@ -17,7 +18,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": ["NEXT_OUTPUT"]
+      "env": ["NEXT_OUTPUT", "API_URL"]
     },
     "dev": {
       "dependsOn": ["^build"],

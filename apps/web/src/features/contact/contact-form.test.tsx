@@ -30,7 +30,7 @@ describe('ContactForm', () => {
   it('sends the brief and confirms the transmission', async () => {
     vi.mocked(submitContactBrief).mockResolvedValue({ status: 'success' });
     const user = userEvent.setup();
-    render(<ContactForm />);
+    render(<ContactForm delivery="api" />);
 
     await fillAndTransmit(user);
 
@@ -46,10 +46,10 @@ describe('ContactForm', () => {
       status: 'error',
       reason: 'unavailable',
       values,
-      mailto: 'mailto:hello@glitchcraft.studio?subject=New%20mission',
+      mailto: 'mailto:hello@glitch-craft.studio?subject=New%20mission',
     });
     const user = userEvent.setup();
-    render(<ContactForm />);
+    render(<ContactForm delivery="api" />);
 
     await fillAndTransmit(user);
 
@@ -57,7 +57,7 @@ describe('ContactForm', () => {
     expect(alert).toHaveTextContent('[ UPLINK FAILED ]');
     expect(within(alert).getByRole('link', { name: /open email draft/i })).toHaveAttribute(
       'href',
-      'mailto:hello@glitchcraft.studio?subject=New%20mission',
+      'mailto:hello@glitch-craft.studio?subject=New%20mission',
     );
     expect(screen.getByPlaceholderText('Your name')).toHaveValue(values.name);
     expect(screen.getByRole('combobox')).toHaveValue(values.budget);
@@ -70,7 +70,7 @@ describe('ContactForm', () => {
       fieldErrors: { email: 'Enter a valid email address.' },
     });
     const user = userEvent.setup();
-    render(<ContactForm />);
+    render(<ContactForm delivery="api" />);
 
     await fillAndTransmit(user);
 
@@ -80,10 +80,31 @@ describe('ContactForm', () => {
     expect(email).toHaveAccessibleDescription('Enter a valid email address.');
   });
 
+  it('hands over an email draft and keeps the input when no API is deployed', async () => {
+    vi.mocked(submitContactBrief).mockResolvedValue({
+      status: 'draft',
+      values,
+      mailto: 'mailto:hello@glitch-craft.studio?subject=New%20mission',
+    });
+    const user = userEvent.setup();
+    render(<ContactForm delivery="email" />);
+
+    expect(screen.getByText(/Nothing is sent automatically/)).toBeInTheDocument();
+    await fillAndTransmit(user);
+
+    const notice = await screen.findByRole('status');
+    expect(notice).toHaveTextContent('[ MISSION BRIEF READY ]');
+    expect(within(notice).getByRole('link', { name: /open email draft/i })).toHaveAttribute(
+      'href',
+      'mailto:hello@glitch-craft.studio?subject=New%20mission',
+    );
+    expect(screen.getByPlaceholderText('Your name')).toHaveValue(values.name);
+  });
+
   it('hides the last result once the visitor edits the form', async () => {
     vi.mocked(submitContactBrief).mockResolvedValue({ status: 'success' });
     const user = userEvent.setup();
-    render(<ContactForm />);
+    render(<ContactForm delivery="api" />);
 
     await fillAndTransmit(user);
     expect(await screen.findByRole('status')).toBeInTheDocument();

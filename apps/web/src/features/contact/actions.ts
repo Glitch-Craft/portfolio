@@ -9,7 +9,7 @@ import {
 import { headers } from 'next/headers';
 import { z } from 'zod';
 
-import { ApiRequestError, apiRequest } from '@/lib/api-client';
+import { ApiRequestError, apiRequest, isApiConfigured } from '@/lib/api-client';
 
 import {
   HONEYPOT_FIELD,
@@ -53,6 +53,11 @@ export async function submitContactBrief(
       if (message) firstErrors[field] = message;
     }
     return { status: 'invalid', values, fieldErrors: firstErrors };
+  }
+
+  if (!isApiConfigured()) {
+    // Frontend-only deployment: hand the visitor a ready-to-send email instead.
+    return { status: 'draft', values, mailto: buildMailtoDraft(parsed.data) };
   }
 
   try {

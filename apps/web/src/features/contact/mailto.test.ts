@@ -13,7 +13,7 @@ describe('buildMailtoDraft', () => {
     const url = new URL(href);
 
     expect(url.protocol).toBe('mailto:');
-    expect(url.pathname).toBe('hello@glitchcraft.studio');
+    expect(url.pathname).toBe('hello@glitch-craft.studio');
     expect(url.searchParams.get('subject')).toBe('New mission // Ada & Co');
     expect(url.searchParams.get('body')).toBe(
       [

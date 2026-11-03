@@ -11,10 +11,15 @@ import { useActionState, useState } from 'react';
 import { ArrowIcon } from '@/components/icons';
 
 import { submitContactBrief } from './actions';
-import { HONEYPOT_FIELD, initialContactFormState, type ContactFormState } from './form-state';
+import {
+  HONEYPOT_FIELD,
+  initialContactFormState,
+  type ContactDelivery,
+  type ContactFormState,
+} from './form-state';
 
 /** The project intake form. Works without JavaScript via the Server Action. */
-export function ContactForm() {
+export function ContactForm({ delivery }: { delivery: ContactDelivery }) {
   const [state, formAction, isPending] = useActionState(
     submitContactBrief,
     initialContactFormState,
@@ -23,7 +28,10 @@ export function ContactForm() {
   const [dismissedState, setDismissedState] = useState<ContactFormState | null>(null);
   const showStatus = state.status !== 'idle' && state !== dismissedState;
 
-  const values = state.status === 'invalid' || state.status === 'error' ? state.values : undefined;
+  const values =
+    state.status === 'invalid' || state.status === 'error' || state.status === 'draft'
+      ? state.values
+      : undefined;
   const fieldErrors = state.status === 'invalid' ? state.fieldErrors : {};
 
   const errorProps = (field: ContactSubmissionField) =>
@@ -130,7 +138,11 @@ export function ContactForm() {
       <p className="form-disclaimer mono">
         NO AUTO-REPLIES. JUST REAL CONVERSATIONS.
         <br />
-        <span>Your brief is transmitted directly to the studio.</span>
+        <span>
+          {delivery === 'api'
+            ? 'Your brief is transmitted directly to the studio.'
+            : 'Prepares a draft in your email app. Nothing is sent automatically.'}
+        </span>
       </p>
       {showStatus && <FormStatus state={state} />}
     </form>
@@ -153,6 +165,16 @@ function FormStatus({ state }: { state: ContactFormState }) {
         <div className="form-status" role="status">
           <span className="mono">[ TRANSMISSION RECEIVED ]</span>
           <p>Your mission brief landed safely. We’ll be in touch.</p>
+        </div>
+      );
+    case 'draft':
+      return (
+        <div className="form-status" role="status">
+          <span className="mono">[ MISSION BRIEF READY ]</span>
+          <p>Your brief is prepared. Open your email app to review and send it.</p>
+          <a href={state.mailto}>
+            OPEN EMAIL DRAFT <ArrowIcon diagonal />
+          </a>
         </div>
       );
     case 'invalid':

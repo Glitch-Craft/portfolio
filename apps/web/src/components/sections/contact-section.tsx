@@ -1,6 +1,7 @@
 import { ArrowIcon, CrosshairIcon } from '@/components/icons';
 import { siteConfig, socialLinks } from '@/config/site';
 import { ContactForm } from '@/features/contact/contact-form';
+import { isApiConfigured } from '@/lib/api-client';
 
 export function ContactSection() {
   return (
@@ -40,7 +41,7 @@ export function ContactSection() {
             </span>
           </div>
         </div>
-        <ContactForm />
+        <ContactForm delivery={isApiConfigured() ? 'api' : 'email'} />
       </div>
       <div className="social-row">
         <span className="mono">FIND US ON THE GRID //</span>

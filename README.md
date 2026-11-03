@@ -154,6 +154,20 @@ generates the spec from the controllers and the shared Zod schemas.
 Rate limiting relies on the client IP. In production, run the site behind a proxy or CDN that sets
 `X-Forwarded-For`, and set `TRUST_PROXY` to match your network.
 
+## Deploying the website to Vercel
+
+The web app deploys on its own; the API is optional.
+
+1. Import the GitHub repository in Vercel and set **Root Directory** to `apps/web`. Vercel detects
+   Next.js, Turborepo and bun, and runs `turbo run build`, which builds `@glitch-craft/contracts`
+   first. Leave the build and install commands at their defaults.
+2. Environment variables (Project → Settings → Environment Variables):
+   - `NEXT_PUBLIC_SITE_URL`: optional. Without it the site uses the project's production domain.
+   - `API_URL`: leave unset until the API is deployed. Without it the contact form prepares an
+     email draft, like the original design. Set it later and redeploy to switch the form to the API.
+3. Add your domain under Project → Settings → Domains and create the DNS records Vercel shows at
+   your registrar.
+
 ## Docker
 
 Both apps have multi-stage Dockerfiles that use `turbo prune`, so each image only contains the

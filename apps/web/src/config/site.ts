@@ -7,7 +7,7 @@ export const siteConfig = {
   description:
     'Glitch Craft is an independent digital studio crafting bespoke websites, tactical interfaces, and high-performance interactive experiences. Built different. By design.',
   url: publicEnv.NEXT_PUBLIC_SITE_URL,
-  email: 'hello@glitchcraft.studio',
+  email: 'hello@glitch-craft.studio',
   themeColor: '#0f1923',
 } as const;
 

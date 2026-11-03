@@ -21,14 +21,14 @@ describe('validateEnv', () => {
       DATABASE_URL,
       NODE_ENV: 'production',
       PORT: '8080',
-      CORS_ORIGINS: 'https://glitchcraft.studio, https://www.glitchcraft.studio,',
+      CORS_ORIGINS: 'https://glitch-craft.studio, https://www.glitch-craft.studio,',
       TRUST_PROXY: '1',
     });
 
     expect(env.PORT).toBe(8080);
     expect(env.CORS_ORIGINS).toEqual([
-      'https://glitchcraft.studio',
-      'https://www.glitchcraft.studio',
+      'https://glitch-craft.studio',
+      'https://www.glitch-craft.studio',
     ]);
     expect(env.TRUST_PROXY).toBe(1);
   });

@@ -5,9 +5,21 @@ export type ContactFormValues = Record<ContactSubmissionField, string>;
 
 export type ContactFieldErrors = Partial<Record<ContactSubmissionField, string>>;
 
+/**
+ * How a brief reaches the studio: through the API, or (when no API is deployed)
+ * as a pre-filled email draft the visitor sends themselves.
+ */
+export type ContactDelivery = 'api' | 'email';
+
 export type ContactFormState =
   | { status: 'idle' }
   | { status: 'success' }
+  | {
+      /** No API configured: the brief was turned into an email draft. */
+      status: 'draft';
+      values: ContactFormValues;
+      mailto: string;
+    }
   | { status: 'invalid'; values: ContactFormValues; fieldErrors: ContactFieldErrors }
   | {
       status: 'error';

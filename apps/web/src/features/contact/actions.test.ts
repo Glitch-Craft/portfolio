@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ApiRequestError, apiRequest } from '@/lib/api-client';
+import { ApiRequestError, apiRequest, isApiConfigured } from '@/lib/api-client';
 
 import { submitContactBrief } from './actions';
 import { HONEYPOT_FIELD, initialContactFormState } from './form-state';
@@ -10,6 +10,8 @@ vi.mock('next/headers', () => ({ headers: vi.fn() }));
 vi.mock('@/lib/api-client', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/lib/api-client')>()),
   apiRequest: vi.fn(),
+  // mockReset restores this default before each test: an API is configured.
+  isApiConfigured: vi.fn(() => true),
 }));
 
 const validBrief = {
@@ -78,13 +80,38 @@ describe('submitContactBrief', () => {
     expect(apiRequest).not.toHaveBeenCalled();
   });
 
+  it('prepares an email draft instead when no API is configured', async () => {
+    vi.mocked(isApiConfigured).mockReturnValue(false);
+
+    const state = await submitContactBrief(initialContactFormState, toFormData(validBrief));
+
+    expect(state).toMatchObject({ status: 'draft', values: validBrief });
+    expect(state.status === 'draft' && state.mailto).toMatch(
+      /^mailto:hello@glitch-craft\.studio\?/,
+    );
+    expect(apiRequest).not.toHaveBeenCalled();
+  });
+
+  it('still validates the brief when no API is configured', async () => {
+    vi.mocked(isApiConfigured).mockReturnValue(false);
+
+    const state = await submitContactBrief(
+      initialContactFormState,
+      toFormData({ ...validBrief, email: 'nope' }),
+    );
+
+    expect(state).toMatchObject({ status: 'invalid' });
+  });
+
   it('reports rate limiting and offers an email draft', async () => {
     vi.mocked(apiRequest).mockRejectedValue(new ApiRequestError(429, undefined));
 
     const state = await submitContactBrief(initialContactFormState, toFormData(validBrief));
 
     expect(state).toMatchObject({ status: 'error', reason: 'rate-limited', values: validBrief });
-    expect(state.status === 'error' && state.mailto).toMatch(/^mailto:hello@glitchcraft\.studio\?/);
+    expect(state.status === 'error' && state.mailto).toMatch(
+      /^mailto:hello@glitch-craft\.studio\?/,
+    );
   });
 
   it('falls back to an email draft when the API is unreachable', async () => {
